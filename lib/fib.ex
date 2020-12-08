@@ -3,9 +3,16 @@ defmodule Fib do
   Documentation for `Fib`.
   """
 
-  def fib(n), do: f(n, 0, 1)
+  @seed {0, 1}
 
-  defp f(n, a, b)
-  defp f(0, a, _b), do: a
-  defp f(n, a, b), do: f(n - 1, a + b, a)
+  def stream do
+    @seed
+    |> Stream.iterate(fn {a, b} -> {a + b, a} end)
+    |> Stream.map(fn {a, _b} -> a end)
+  end
+
+  def fib(n) do
+    stream()
+    |> Enum.at(n)
+  end
 end

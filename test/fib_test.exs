@@ -25,8 +25,8 @@ defmodule FibTest do
       end
     end
 
-    property "works the same as the reference implementation for n in (1, 30)" do
-      forall n <- integer(1, 30) do
+    property "works the same as the reference implementation" do
+      forall n <- positive_int() do
         num = Fib.fib(n)
         ref = model_fib(n)
 
@@ -35,11 +35,9 @@ defmodule FibTest do
     end
   end
 
-  defp model_fib(n) do
-    if n <= 2 do
-      1
-    else
-      model_fib(n - 1) + model_fib(n - 2)
-    end
-  end
+  defp model_fib(n), do: f(n, 0, 1)
+
+  defp f(n, a, b)
+  defp f(0, a, _b), do: a
+  defp f(n, a, b), do: f(n - 1, a + b, a)
 end
